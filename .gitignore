@@ -1,0 +1,65 @@
+# --- Node ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# --- Environment Files ---
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# --- Logs ---
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# --- Coverage & Testing ---
+coverage/
+.nyc_output/
+.vscode-test/
+
+# --- Build Outputs ---
+dist/
+build/
+public/build/
+.next/
+out/
+tmp/
+temp/
+
+# --- System Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS Specific ---
+*.bak
+*.orig
+
+# --- Misc ---
+# Local database, uploads, or runtime data
+/uploads/
+data/
+db.sqlite3
+
+# --- React Specific ---
+*.cache/
+.cache/
+*.gz
