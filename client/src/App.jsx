@@ -22,7 +22,7 @@ const App = () => {
           <Route path='/messages' element={<Messages />} />
           <Route path='/messages/:userId' element={<Chatbox />} />
           <Route path='/connections' element={<Connection />} />
-          <Route path='/dicover' element={<Discover />} />
+          <Route path='/discover' element={<Discover />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/messages' element={<Messages />} />
           <Route path='/profile/:profileId' element={<Profile />} />

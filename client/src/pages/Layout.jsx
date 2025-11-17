@@ -10,7 +10,7 @@ const Layout = () => {
 
     const [sidebarOPen, setSidebarOpen] = useState(false);
     return user ? (
-        <div className='w-full flex h-screen'>
+        <div className='w-full flex h-screen '>
             <div
         className={`fixed top-0 left-0 h-full bg-white shadow-lg transition-transform duration-300 z-40
           ${sidebarOPen? 'translate-x-0' : '-translate-x-full'} 
