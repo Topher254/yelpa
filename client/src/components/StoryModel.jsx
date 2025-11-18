@@ -1,6 +1,7 @@
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, TextIcon, Upload } from 'lucide-react';
 import React, { useState } from 'react'
-
+import {toast} from 'react-hot-toast'
+import { useNavigate } from 'react-router';
 const StoryModel = ({ setShowModal, fetchStories }) => {
     const bgColors = [
         "#FF5A5F", // red
@@ -19,6 +20,8 @@ const StoryModel = ({ setShowModal, fetchStories }) => {
     const [media, setMedia] = useState(null)
     const [previewUrl, setPreviewUrl] = useState(null)
 
+    const navigate = useNavigate()
+
 
 
     const handleMediaUpload = (e) => {
@@ -32,6 +35,11 @@ const StoryModel = ({ setShowModal, fetchStories }) => {
 
 
     const handleCreateStory = async () => {
+        try {
+            navigate('/')
+        } catch (error) {
+            toast.error(error.message);
+        }
 
     }
 
@@ -75,9 +83,22 @@ const StoryModel = ({ setShowModal, fetchStories }) => {
                 </div>
 
 
-                <div>
-                    
+                <div className='flex gap-2 mt-4'>
+                <button onClick={()=>{setMode('text');setMedia(null);setPreviewUrl(null)}} className={`flex-1 cursor-pointer flex items-center gap-2 p-2 rounded ${mode==='text'?'bg-white text-black':'bg-zinc-800'}`}>
+                    <TextIcon size={18}/>Text
+                </button>
+                    <label className={`flex-1 border border-gray-500 flex items-center justify-center gap-2 p-2 rounded cursor-pointer ${mode==='media'?'bg-white text-black':'bg-zinc-800'}`}>
+                        <input onChange={(e)=>{handleMediaUpload(e);setMode('media')}} type='file' accept='image/*,video/*' className='hidden'/>
+                        <Upload/>Photo/Video
+                    </label>
                 </div>
+               <button className='flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-blue-500 hover:bg-blue-600 active:scale-95 transition cursor-pointer'
+                    onClick={()=>toast.promise(handleCreateStory(),{
+                        loading:'Saving ...',
+                        success:<p>Yelp Added</p>,
+                        error:e=><p>{e.message}</p>
+                        
+                        })} >Post Yelp</button>
 
             </div>
 
