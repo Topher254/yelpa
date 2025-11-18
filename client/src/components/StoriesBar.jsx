@@ -24,9 +24,9 @@ const StoriesBar = () => {
             <div className='flex gap-4 pb-5'>
                 {/* ADDD STORY CAR */}
                 <div onClick={() => { setShowModal(true) }} className='rounded-lg shadow-sm min-w-30 max-w-30 max-h-40 aspect-3/4 cursor-pointer hover:shadow-lg
-        transition-all duration-300 border-2 border-dashed border-blue-500 bg-linear-to-b from-blue-100 to-white'>
+        transition-all duration-300 border-2 border-dashed border-purple-500 bg-linear-to-b from-purple-100 to-white'>
                     <div className='h-full flex flex-col items-center justify-center'>
-                        <div className='size-10 bg-blue-500 rounded-full flex items-center justify-center mb-3'>
+                        <div className='size-10 bg-purple-500 rounded-full flex items-center justify-center mb-3'>
                             <Plus className='w-5 h-5 text-white' />
                         </div>
                         <p className='text-sm font-medium text-slate-700 text-center'>Create a Yelp</p>
@@ -38,7 +38,7 @@ const StoriesBar = () => {
                 {
                     stories.map((story, index) => (
                         <div onClick={()=>{setViewStory(story)}} key={index} className={` p-2 relative rounded-lg shadow min-w-30 max-h-40 cursor-pointer
-                        hover:shadow-lg transition-all duration-200 bg-linear-to-b from-blue-500 to-indigo-600 active:scale-95`}>
+                        hover:shadow-lg transition-all duration-200 bg-linear-to-b from-purple-500 to-purple-600 active:scale-95`}>
                             <img src={story.user.profile_picture} alt='image' className='absolute size-8 top-3 left-3text-white  z-10 rounded-full ring ring-gray-100 shadow' />
                             <p className='absolute top-18 left-3 text-white  text-sm truncate max-w-24'>{story.content}</p>
                             <p className='absolute bottom-1 text-white right-2 z-10 text-xs'>{moment(story.createdAt).fromNow()}</p>

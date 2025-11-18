@@ -26,7 +26,7 @@ const Sidebar = () => {
         <div className="w-full mt-4">
           <Link
             to="/create-post"
-            className="flex cursor-pointer transition-all hover:scale-105 hover:bg-blue-600 duration-300 justify-center items-center gap-2 rounded-lg bg-blue-500 text-white p-2"
+            className="flex cursor-pointer transition-all hover:scale-105 hover:bg-purple-600 duration-300 justify-center items-center gap-2 rounded-lg bg-purple-500 text-white p-2"
           >
             <CirclePlus className="w-5 h-5" />
             Create Post

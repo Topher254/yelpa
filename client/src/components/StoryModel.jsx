@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 const StoryModel = ({ setShowModal, fetchStories }) => {
     const bgColors = [
         "#FF5A5F", // red
-        "#007AFF", // blue
+        "#007AFF", // purple
         "#34C759", // green
         "#FF9500", // orange
         "#AF52DE", // purple
@@ -92,7 +92,7 @@ const StoryModel = ({ setShowModal, fetchStories }) => {
                         <Upload/>Photo/Video
                     </label>
                 </div>
-               <button className='flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-blue-500 hover:bg-blue-600 active:scale-95 transition cursor-pointer'
+               <button className='flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-purple-500 hover:bg-purple-600 active:scale-95 transition cursor-pointer'
                     onClick={()=>toast.promise(handleCreateStory(),{
                         loading:'Saving ...',
                         success:<p>Yelp Added</p>,

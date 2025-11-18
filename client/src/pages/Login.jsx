@@ -24,8 +24,8 @@ const Login = () => {
               <p className='text-sm'>Used by All people</p>
             </div>
           </div>
-          <h1 className='text-3xl md:text-6xl font-bold text-blue-600'>Take a deep breath. You’re home now.</h1>
-          <p className='text-xl text-blue-900'>The place where your emotions can breath</p>
+          <h1 className='text-3xl md:text-6xl font-bold text-purple-600'>Take a deep breath. You’re home now.</h1>
+          <p className='text-xl text-purple-900'>The place where your emotions can breath</p>
         </div>
         <div className='md:h-10'></div>
       </div>

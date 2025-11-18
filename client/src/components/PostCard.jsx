@@ -22,7 +22,7 @@ const PostCard = ({ post }) => {
                 <img src={post.user.profile_picture} alt='image' className='w-10 h-10 rounded-full shadow' />
                 <div className='flex flex-col justify-start  space-x-1'>
                     <div className='flex gap-2 items-center'><span>{post.user.full_name}</span>
-                        <BadgeCheck className='w-4 h-4 text-blue-500' />
+                        <BadgeCheck className='w-4 h-4 text-purple-500' />
                     </div>
                     <div className='text-gray-500 text-sm flex justify-center items-center'>
                         @{post.user.username} . {moment(post.createdAt).fromNow()}
