@@ -1,21 +1,46 @@
 import React, { useState } from 'react'
-import { dummyUserData } from '../assets/assets'
 import { Pencil } from 'lucide-react';
+import { userService } from '../services/userService';
+import toast from 'react-hot-toast';
 
-const ProfileModal = ({ setShowEdit }) => {
-
-    const user = dummyUserData;
+const ProfileModal = ({ setShowEdit, user, onProfileUpdate }) => {
     const [editForm, setEditForm] = useState({
-        username: user.username,
-        bio: user.bio,
-        location: user.location,
+        username: user.username || '',
+        bio: user.bio || '',
+        location: user.location || '',
         profile_picture: null,
         cover_photo: null,
-        full_name: user.full_name
-    })
+        full_name: user.full_name || ''
+    });
+    const [loading, setLoading] = useState(false);
 
     const handleSaveProfile = async (e) => {
         e.preventDefault();
+        try {
+            setLoading(true);
+            
+            // Prepare form data for file upload
+            const formData = new FormData();
+            formData.append('username', editForm.username);
+            formData.append('bio', editForm.bio);
+            formData.append('location', editForm.location);
+            formData.append('full_name', editForm.full_name);
+            
+            if (editForm.profile_picture) {
+                formData.append('profile_picture', editForm.profile_picture);
+            }
+            if (editForm.cover_photo) {
+                formData.append('cover_photo', editForm.cover_photo);
+            }
+
+            await userService.updateUserProfile(user._id, formData);
+            toast.success('Profile updated successfully!');
+            onProfileUpdate();
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Failed to update profile');
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -30,6 +55,7 @@ const ProfileModal = ({ setShowEdit }) => {
                             <img 
                                 src={editForm.profile_picture ? URL.createObjectURL(editForm.profile_picture) : user.profile_picture} 
                                 className='w-24 h-24 rounded-full object-cover border-2 border-purple-500 shadow-md'
+                                alt="Profile"
                             />
                             <div className='absolute bottom-0 right-0 bg-purple-500 p-1 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition'>
                                 <Pencil className='w-4 h-4 text-white'/>
@@ -53,6 +79,7 @@ const ProfileModal = ({ setShowEdit }) => {
                         <img 
                             src={editForm.cover_photo ? URL.createObjectURL(editForm.cover_photo) : user.cover_photo} 
                             className='w-full h-40 object-cover rounded-lg border border-gray-200 shadow-sm'
+                            alt="Cover"
                         />
                         <div className='absolute top-2 right-2 bg-purple-500 p-1 rounded-full cursor-pointer opacity-0 group-hover:opacity-100 transition'>
                             <Pencil className='w-5 h-5 text-white'/>
@@ -127,15 +154,17 @@ const ProfileModal = ({ setShowEdit }) => {
                         <button 
                             type='button' 
                             onClick={() => setShowEdit(false)} 
-                            className='bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full transition'
+                            className='bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-full transition disabled:opacity-50'
+                            disabled={loading}
                         >
                             Cancel
                         </button>
                         <button 
                             type='submit' 
-                            className='bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-full transition'
+                            className='bg-purple-500 hover:bg-purple-600 text-white px-5 py-2 rounded-full transition disabled:opacity-50'
+                            disabled={loading}
                         >
-                            Save Changes
+                            {loading ? 'Saving...' : 'Save Changes'}
                         </button>
                     </div>
 

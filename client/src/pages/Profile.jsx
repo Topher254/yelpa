@@ -1,114 +1,157 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router'
-import { dummyPostsData, dummyUserData } from '../assets/assets';
-import Loader from '../components/Loader';
-import UserProfileInfo from '../components/UserProfileInfo';
-import PostCard from '../components/PostCard';
-import moment from 'moment';
-import ProfileModal from '../components/ProfileModal';
+import { useParams } from 'react-router'
+import { useUser } from '@clerk/clerk-react'
+import UserProfileInfo from '../components/UserProfileInfo'
+import ProfileModal from '../components/ProfileModal'
+import PostCard from '../components/PostCard'
+import Loader from '../components/Loader'
+import { userService } from '../services/userService'
+import { postService } from '../services/postService'
 
 const Profile = () => {
-  const {profileId} = useParams();
-  const [user,setUser]= useState(null);
-  const [posts,setPosts] = useState([]);
-  const [activeTab,setActiveTab]= useState('posts')
-  const [showEdit,setShowEdit]= useState(false)
+  const { profileId } = useParams()
+  const { user: clerkUser } = useUser()
+  const [user, setUser] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [showEdit, setShowEdit] = useState(false)
 
-  // fetch userd sta
-  const fetchUser=async()=>{
-    setUser(dummyUserData);
-    setPosts(dummyPostsData)
+  const fetchUserData = async () => {
+    try {
+      setLoading(true)
+      
+      // If viewing another user's profile
+      if (profileId) {
+        console.log('Fetching other user profile by ID:', profileId);
+        const userData = await userService.getUserProfileById(profileId);
+        setUser(userData);
+        
+        const userPosts = await postService.getUserPosts(profileId);
+        setPosts(userPosts);
+      } 
+      // If viewing own profile
+      else if (clerkUser) {
+        console.log('Fetching own profile for Clerk user:', clerkUser.id);
+        const userData = await userService.getUserProfile(clerkUser.id);
+        setUser(userData);
+        
+        const userPosts = await postService.getUserPosts(userData._id);
+        setPosts(userPosts);
+      }
+      
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      
+      // Fallback: Create a user object from Clerk data
+      if (clerkUser && !profileId) {
+        setUser({
+          _id: 'temp_' + clerkUser.id,
+          clerkUserId: clerkUser.id,
+          full_name: clerkUser.fullName,
+          username: clerkUser.username || clerkUser.fullName?.toLowerCase().replace(/\s+/g, '_'),
+          email: clerkUser.primaryEmailAddress?.emailAddress,
+          profile_picture: clerkUser.imageUrl,
+          cover_photo: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=300&fit=crop',
+          bio: 'Welcome to my profile!',
+          location: 'Unknown',
+          followers: [],
+          following: [],
+          connections: [],
+          is_verified: false,
+          createdAt: new Date().toISOString()
+        });
+      }
+      setPosts([]);
+    } finally {
+      setLoading(false)
+    }
   }
 
-useEffect(()=>{
-  fetchUser();
-},[])
-
-  return user ? (
-    <div className='relative h-full overflow-y-scroll bg-gray-50 p-5'>
-    <div className='max-w-3xl mx-auto'>
-    {/* profile card */}
-    <div className='bg-white rounded-2xl shadow overflow-hidden'>
-    {/* cover pic */}
-    <div className='h-40 md:h-56 bg-purple-400'>
-    {user.cover_photo && <img src={user.cover_photo} className='w-full h-full object-cover'/>
-    
-    
+  useEffect(() => {
+    if (clerkUser || profileId) {
+      fetchUserData();
     }
+  }, [clerkUser, profileId])
 
+  const handleProfileUpdate = () => {
+    fetchUserData();
+    setShowEdit(false);
+  }
+
+  if (loading) {
+    return <Loader />
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-800">User not found</h2>
+          <p className="text-gray-600">The user you're looking for doesn't exist.</p>
+          <button 
+            onClick={fetchUserData}
+            className="mt-4 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className='min-h-screen bg-slate-50'>
+      <div className='max-w-4xl mx-auto p-4'>
+        {/* Cover Photo */}
+        <div className='relative h-64 bg-gradient-to-r from-purple-500 to-purple-600 rounded-t-lg'>
+          {user.cover_photo && (
+            <img
+              src={user.cover_photo}
+              alt='Cover'
+              className='w-full h-full object-cover rounded-t-lg'
+            />
+          )}
+        </div>
+
+        {/* Profile Info */}
+        <UserProfileInfo 
+          user={user} 
+          posts={posts} 
+          profileId={profileId}
+          setShowEdit={setShowEdit}
+        />
+
+        {/* Posts Section */}
+        <div className='mt-8'>
+          <h2 className='text-2xl font-bold text-purple-800 mb-6'>Posts</h2>
+          <div className='space-y-6'>
+            {posts.length > 0 ? (
+              posts.map((post) => (
+                <PostCard key={post._id} post={post} />
+              ))
+            ) : (
+              <div className='text-center py-8'>
+                <p className='text-gray-500'>No posts yet.</p>
+                {!profileId && (
+                  <p className='text-purple-600 mt-2'>
+                    Create your first post to share with the community!
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Edit Profile Modal */}
+      {showEdit && (
+        <ProfileModal 
+          setShowEdit={setShowEdit} 
+          user={user}
+          onProfileUpdate={handleProfileUpdate}
+        />
+      )}
     </div>
-    {/* user ingo */}
-    <UserProfileInfo user={user} posts={posts} profileId={profileId} setShowEdit={setShowEdit}/>
-
-    </div>
-
-    {/* tabs */}
-    <div className='mt-6'>
-    <div className='bg-white rounded-full shadow p-1 flex max-w-md mx-auto'>
-
-{
-  ['posts','media','likes'].map((tab)=>(
-    <button
-    onClick={()=>setActiveTab(tab)}
-     key={tab} className={`flex-1 px-4 py-2 text-sm font-medium rounded-full transition-colors cursor-pointer
-    ${activeTab===tab?"bg-purple-500 text-white":'text-gray-600 hover:text-gray-900'}`}>{tab.charAt(0).toLocaleUpperCase()+tab.slice(1)}</button>
-  ))
-}
-
-    </div>
-
-    {/* posts */}
-    {
-      activeTab==='posts'&&(
-        <div className='mt-6 flex flex-col items-center gap-6'>
-        {posts.map((post)=>(
-          <PostCard key={post._id} post={post}/>
-        ))}</div>
-      )
-    }
-    {/* media */}
-      {
-  activeTab === 'media' && (
-    <div className='mt-6 flex flex- items-center gap-6'>
-      {
-        posts
-          .filter((post) => Array.isArray(post.image_urls) && post.image_urls.length > 0)
-          .map((post) => (
-            <div key={post._id} className='w-full shadow rounded-lg p-2 flex flex-col items-center gap-4'>
-              {post.image_urls.map((image, index) => (
-                <Link
-                  to={image}
-                  target='_blank'
-                  key={index}
-                  className='relative group'
-                >
-                  <img
-                    src={image}
-                    alt='Media'
-                    className='w-64 aspect-video object-cover rounded-lg'
-                  />
-                  <p>posted {moment(post.createdAt).fromNow()}</p>
-                </Link>
-              ))}
-            </div>
-          ))
-      }
-    </div>
-  )
-}
-
-
-    </div>
-
-    </div>
-    {/* edit prifle modal */}
-{
-  showEdit&&<ProfileModal setShowEdit={setShowEdit}/>
-}
-
-    </div>
-  ):(
-    <Loader/>
   )
 }
 
