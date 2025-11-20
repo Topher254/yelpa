@@ -1,33 +1,43 @@
-# --- Node ---
+##########################
+# Node (client + server)
+##########################
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-package-lock.json
+package-lock.json # optional
 
-# --- Environment Files ---
+##########################
+# Environment Variables
+##########################
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+client/.env.*
+server/.env.*
+!.env.example
 
-# --- Logs ---
-logs
+##########################
+# Logs
+##########################
+logs/
 *.log
 *.log.*
-pids
+pids/
 *.pid
 *.seed
 *.pid.lock
 
-# --- Coverage & Testing ---
+##########################
+# Coverage & Testing
+##########################
 coverage/
 .nyc_output/
 .vscode-test/
 
-# --- Build Outputs ---
+##########################
+# Build Outputs (all frameworks)
+##########################
 dist/
 build/
 public/build/
@@ -35,31 +45,41 @@ public/build/
 out/
 tmp/
 temp/
+*.gz
 
-# --- System Files ---
+##########################
+# Frontend (Vite)
+##########################
+*.cache/
+.cache/
+vite.svg
+
+##########################
+# System Files
+##########################
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Icon?
 Desktop.ini
 
-# --- IDEs & Editors ---
+##########################
+# IDE / Editors
+##########################
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# --- OS Specific ---
+##########################
+# OS Misc
+##########################
 *.bak
 *.orig
 
-# --- Misc ---
-# Local database, uploads, or runtime data
-/uploads/
+##########################
+# Project Data
+##########################
+uploads/
 data/
 db.sqlite3
-
-# --- React Specific ---
-*.cache/
-.cache/
-*.gz
