@@ -27,31 +27,31 @@ Modern social media platforms don’t provide **safe, immediate emotional suppor
 
 View posts and interactions from your connections. Stay updated on community activity.
 
-![Feed Page](./src/assets/feedpage.png)
+![Feed Page](./client/src/assets/feedpage.png)
 
 #### **Discover Page**
 
 Search and discover new users to follow, connect, and engage with.
 
-![Discover Page](./src/assets/discoverpage.png)
+![Discover Page](./client/src/assets/discoverpage.png)
 
 #### **Connections Page**
 
 Manage friends and followers, see suggested connections, and build your network.
 
-![Connections Page](./src/assets/connectionspage.png)
+![Connections Page](./client/src/assets/connectionspage.png)
 
 #### **Profile Page**
 
 View and edit personal information, posts, and stories.
 
-![Profile Page](./src/assets/profilepage.png)
+![Profile Page](./client/src/assets/profilepage.png)
 
 #### **Story Creation & Viewing**
 
 Share temporary stories and view stories from your network.
 
-![Group Users](./src/assets/group_users.jpg)
+![Group Users](./client/src/assets/group_users.jpg)
 
 ---
 
@@ -61,19 +61,19 @@ Share temporary stories and view stories from your network.
 
 Instantly create a "Yelp" to vent emotions or stress. Can be sent to verified listeners or shared anonymously.
 
-![Create Yelp](./src/assets/createyelppage.png)
+![Create Yelp](./client/src/assets/createyelppage.png)
 
 #### **View Yelps**
 
 Browse yelps from others, respond, or offer support.
 
-![View Yelps](./src/assets/viewyelps.png)
+![View Yelps](./client/src/assets/viewyelps.png)
 
 #### **Real-Time Messaging**
 
 Chat directly with supporters or friends in real-time.
 
-![Chatting Page](./src/assets/chattingpage.png)
+![Chatting Page](./client/src/assets/chattingpage.png)
 
 ---
 
@@ -83,13 +83,13 @@ Chat directly with supporters or friends in real-time.
 
 Quick-access distress feature connecting users to professional support.
 
-![SOS Page](./src/assets/SOSpage.png)
+![SOS Page](./client/src/assets/SOSpage.png)
 
 #### **Verified Listener Badges**
 
 Identify trusted, verified supporters in the community.
 
-![Yelps Page](./src/assets/yelpspage.png)
+![Yelps Page](./client/src/assets/yelpspage.png)
 
 ---
 
@@ -99,22 +99,22 @@ Identify trusted, verified supporters in the community.
 
 Update personal info, cover photos, and profile pictures easily.
 
-![Edit Profile Page](./src/assets/editprofilepage.png)
+![Edit Profile Page](./client/src/assets/editprofilepage.png)
 
-![Manage Account](./src/assets/manageaccount.png)
+![Manage Account](./client/src/assets/manageaccount.png)
 
 #### **Responsive Mobile Layout**
 
 Smooth user experience on mobile devices.
 
-![Mobile View](./src/assets/mobileview.png)
+![Mobile View](./client/src/assets/mobileview.png)
 
 #### **Clean UI & Modern Design**
 
 User-friendly interface with intuitive navigation and transitions.
 
 ![Sample Cover & Profile](./src/assets/sample_cover.jpg)
-![Sample Profile](./src/assets/sample_profile.jpg)
+![Sample Profile](./client/src/assets/sample_profile.jpg)
 
 ---
 
@@ -262,11 +262,44 @@ cd ../server && npm run dev
 
 ---
 
-## **Screenshots**
+# Screenshots
 
-Inline screenshots for each feature are displayed above in their respective sections for immediate visual reference.
+## Feed
+![Feed](./client/src/assets/feedpage.png)
 
----
+## Discover
+![Discover](./client/src/assets/discoverpage.png)
+
+## Connections
+![Connections](./client/src/assets/connectionspage.png)
+
+## Chat
+![Chat](./client/src/assets/chattingpage.png)
+
+## Profile
+![Profile](./client/src/assets/profilepage.png)
+
+## Mobile View
+![Mobile](./client/src/assets/mobileview.png)
+
+## Create Yelp
+![Create Yelp](./client/src/assets/createyelppage.png)
+
+## View Yelps
+![View Yelps](./client/src/assets/viewyelps.png)
+
+## Yelps Page
+![Yelps Page](./client/src/assets/yelpspage.png)
+
+## Edit Profile
+![Edit Profile](./client/src/assets/editprofilepage.png)
+
+## Manage Account
+![Manage Account](./client/src/assets/manageaccount.png)
+
+## SOS
+![SOS](./client/src/assets/SOSpage.png)
+
 
 ## **Contact**
 
